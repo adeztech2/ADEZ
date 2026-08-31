@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | ADEZ TECH</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #050505;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 900;
+      margin-bottom: 25px;
+    }
+
+    .logo span {
+      color: #00ff88;
+    }
+
+    .card {
+      background: #0b0b0b;
+      border: 1px solid #202020;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 17px;
+    }
+
+    .message.error {
+      display: block;
+      color: #ff7777;
+      background: #291010;
+      border: 1px solid #552020;
+    }
+
+    .message.success {
+      display: block;
+      color: #00ff88;
+      background: #0d261a;
+      border: 1px solid #1d5a3b;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      color: #bbb;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      height: 49px;
+      padding: 0 14px;
+      border-radius: 8px;
+      border: 1px solid #292929;
+      background: #111;
+      color: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: #00ff88;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 60px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #777;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .show-password:hover {
+      color: #00ff88;
+    }
+
+    .options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 5px 0 22px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .remember input {
+      width: 15px;
+      height: 15px;
+      accent-color: #00ff88;
+    }
+
+    .forgot {
+      color: #00ff88;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .login-button {
+      width: 100%;
+      height: 50px;
+      border: none;
+      border-radius: 8px;
+      background: #00ff88;
+      color: #000;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .login-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(0, 255, 136, .15);
+    }
+
+    .login-button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .register {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 23px;
+    }
+
+    .register a {
+      color: #00ff88;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 18px;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      color: #00ff88;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+
+      .card {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">
+      ADEZ <span>TECH</span>
+    </div>
+
+    <div class="card">
+
+      <h1>Welcome Back</h1>
+
+      <p class="subtitle">
+        Login to your ADEZ TECH panel.
+      </p>
+
+      <div id="message" class="message"></div>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+
+          <label for="login">Email or Username</label>
+
+          <input
+            type="text"
+            id="login"
+            placeholder="Enter email or username"
+            autocomplete="username"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">Password</label>
+
+          <div class="password-wrapper">
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              onclick="togglePassword()"
+            >
+              SHOW
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="options">
+
+          <label class="remember">
+
+            <input
+              type="checkbox"
+              id="remember"
+            >
+
+            Remember me
+
+          </label>
+
+          <a href="#" class="forgot" onclick="forgotPassword(event)">
+            Forgot password?
+          </a>
+
+        </div>
+
+        <button
+          type="submit"
+          class="login-button"
+          id="loginButton"
+        >
+          LOGIN
+        </button>
+
+      </form>
+
+      <div class="register">
+        Don't have an account?
+        <a href="register.html">Create Account</a>
+      </div>
+
+    </div>
+
+    <a href="index.html" class="back">
+      ← Back to ADEZ TECH
+    </a>
+
+  </div>
+
+
+  <script>
+
+    const loginForm = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+    const loginButton = document.getElementById("loginButton");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function togglePassword() {
+
+      const password =
+        document.getElementById("password");
+
+      const button =
+        document.querySelector(".show-password");
+
+      if (password.type === "password") {
+
+        password.type = "text";
+        button.textContent = "HIDE";
+
+      } else {
+
+        password.type = "password";
+        button.textContent = "SHOW";
+
+      }
+    }
+
+    function forgotPassword(event) {
+
+      event.preventDefault();
+
+      showMessage(
+        "Password recovery will be available soon.",
+        "error"
+      );
+    }
+
+    loginForm.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      const login =
+        document.getElementById("login").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const remember =
+        document.getElementById("remember").checked;
+
+      if (!login || !password) {
+
+        showMessage(
+          "Please enter your login details.",
+          "error"
+        );
+
+        return;
+      }
+
+      loginButton.disabled = true;
+      loginButton.textContent = "LOGGING IN...";
+
+      try {
+
+        const response = await fetch("/api/login", {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            login,
+            password
+          })
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(
+            data.message || "Login failed."
+          );
+        }
+
+        /*
+          Store only the authentication token.
+          The server remains responsible for
+          authentication and user data.
+        */
+
+        if (data.token) {
+
+          const storage =
+            remember
+              ? localStorage
+              : sessionStorage;
+
+          storage.setItem(
+            "adez_token",
+            data.token
+          );
+
+        }
+
+        showMessage(
+          "Login successful. Redirecting...",
+          "success"
+        );
+
+        setTimeout(() => {
+
+          window.location.href =
+            "dashboard.html";
+
+        }, 700);
+
+      } catch (error) {
+
+        showMessage(
+          error.message || "Unable to login.",
+          "error"
+        );
+
+        loginButton.disabled = false;
+        loginButton.textContent = "LOGIN";
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
