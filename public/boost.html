@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Boost Services | ADEZ TECH</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#050505;
+      color:#fff;
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      width:240px;
+      height:100vh;
+      background:#090909;
+      border-right:1px solid #202020;
+      padding:25px 15px;
+      z-index:100;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:900;
+      padding:0 12px 30px;
+    }
+
+    .logo span{
+      color:#00ff88;
+    }
+
+    .menu-title{
+      color:#555;
+      font-size:10px;
+      font-weight:bold;
+      margin:10px 12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    .nav-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:13px 12px;
+      border-radius:8px;
+      color:#888;
+      font-size:14px;
+      margin-bottom:5px;
+      transition:.2s;
+    }
+
+    .nav-item:hover,
+    .nav-item.active{
+      background:#102219;
+      color:#00ff88;
+    }
+
+    .nav-icon{
+      width:20px;
+      text-align:center;
+    }
+
+    .logout{
+      position:absolute;
+      bottom:25px;
+      left:15px;
+      right:15px;
+      cursor:pointer;
+    }
+
+    /* MAIN */
+
+    .main{
+      margin-left:240px;
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:72px;
+      background:#080808;
+      border-bottom:1px solid #202020;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 35px;
+    }
+
+    .page-title{
+      font-size:19px;
+      font-weight:800;
+    }
+
+    .user-mini{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#aaa;
+      font-size:13px;
+    }
+
+    .avatar{
+      width:35px;
+      height:35px;
+      background:#00ff88;
+      color:#000;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+    }
+
+    .content{
+      padding:35px;
+      max-width:1100px;
+    }
+
+    .heading{
+      margin-bottom:25px;
+    }
+
+    .heading h1{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .heading p{
+      color:#777;
+      font-size:14px;
+    }
+
+    /* BALANCE */
+
+    .balance{
+      background:#0b0b0b;
+      border:1px solid #202020;
+      border-radius:12px;
+      padding:18px 20px;
+      margin-bottom:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .balance-label{
+      color:#777;
+      font-size:12px;
+      margin-bottom:5px;
+    }
+
+    .balance-value{
+      color:#00ff88;
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .deposit-btn{
+      background:#151515;
+      border:1px solid #292929;
+      color:#fff;
+      padding:10px 15px;
+      border-radius:7px;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .deposit-btn:hover{
+      border-color:#00ff88;
+      color:#00ff88;
+    }
+
+    /* FORM */
+
+    .card{
+      background:#0b0b0b;
+      border:1px solid #202020;
+      border-radius:14px;
+      padding:25px;
+    }
+
+    .card h2{
+      font-size:18px;
+      margin-bottom:20px;
+    }
+
+    .form-group{
+      margin-bottom:18px;
+    }
+
+    label{
+      display:block;
+      color:#bbb;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:8px;
+    }
+
+    select,
+    input{
+      width:100%;
+      height:48px;
+      background:#111;
+      border:1px solid #292929;
+      color:#fff;
+      border-radius:8px;
+      padding:0 13px;
+      outline:none;
+      font-size:14px;
+    }
+
+    select:focus,
+    input:focus{
+      border-color:#00ff88;
+    }
+
+    option{
+      background:#111;
+      color:#fff;
+    }
+
+    .hint{
+      color:#666;
+      font-size:11px;
+      margin-top:6px;
+    }
+
+    /* PRICE */
+
+    .price-box{
+      background:#08150e;
+      border:1px solid #17452d;
+      border-radius:10px;
+      padding:18px;
+      margin:20px 0;
+    }
+
+    .price-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:8px;
+      color:#888;
+      font-size:13px;
+    }
+
+    .price-row:last-child{
+      margin-bottom:0;
+    }
+
+    .price-total{
+      color:#00ff88;
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .submit{
+      width:100%;
+      height:51px;
+      background:#00ff88;
+      color:#000;
+      border:0;
+      border-radius:8px;
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+    }
+
+    .submit:hover{
+      box-shadow:0 10px 30px rgba(0,255,136,.15);
+    }
+
+    .submit:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+
+    .message{
+      display:none;
+      padding:12px;
+      border-radius:8px;
+      font-size:13px;
+      margin-bottom:18px;
+      text-align:center;
+    }
+
+    .message.error{
+      display:block;
+      background:#291010;
+      border:1px solid #552020;
+      color:#ff7777;
+    }
+
+    .message.success{
+      display:block;
+      background:#0d261a;
+      border:1px solid #1d5a3b;
+      color:#00ff88;
+    }
+
+    /* INFO */
+
+    .info{
+      margin-top:20px;
+      background:#0b0b0b;
+      border:1px solid #202020;
+      border-radius:12px;
+      padding:20px;
+    }
+
+    .info h3{
+      font-size:15px;
+      margin-bottom:10px;
+    }
+
+    .info p{
+      color:#777;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    /* MOBILE */
+
+    .mobile-logo{
+      display:none;
+    }
+
+    .bottom-nav{
+      display:none;
+    }
+
+    @media(max-width:800px){
+
+      .sidebar{
+        display:none;
+      }
+
+      .main{
+        margin-left:0;
+      }
+
+      .topbar{
+        height:65px;
+        padding:0 18px;
+      }
+
+      .mobile-logo{
+        display:block;
+        font-size:19px;
+        font-weight:900;
+      }
+
+      .mobile-logo span{
+        color:#00ff88;
+      }
+
+      .page-title{
+        display:none;
+      }
+
+      .content{
+        padding:23px 18px 90px;
+      }
+
+      .heading h1{
+        font-size:24px;
+      }
+
+      .balance{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .deposit-btn{
+        width:100%;
+        text-align:center;
+      }
+
+      .card{
+        padding:20px;
+      }
+
+      .bottom-nav{
+        display:flex;
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:65px;
+        background:#090909;
+        border-top:1px solid #202020;
+        z-index:1000;
+        justify-content:space-around;
+        align-items:center;
+      }
+
+      .bottom-nav a{
+        color:#666;
+        font-size:10px;
+        text-align:center;
+      }
+
+      .bottom-nav a.active{
+        color:#00ff88;
+      }
+
+      .bottom-nav .icon{
+        display:block;
+        font-size:18px;
+        margin-bottom:3px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      ADEZ <span>TECH</span>
+    </div>
+
+    <div class="menu-title">
+      Main Menu
+    </div>
+
+    <a href="dashboard.html" class="nav-item">
+      <span class="nav-icon">⌂</span>
+      Dashboard
+    </a>
+
+    <a href="boost.html" class="nav-item active">
+      <span class="nav-icon">🚀</span>
+      Boost Services
+    </a>
+
+    <a href="orders.html" class="nav-item">
+      <span class="nav-icon">📋</span>
+      My Orders
+    </a>
+
+    <a href="wallet.html" class="nav-item">
+      <span class="nav-icon">💳</span>
+      Wallet
+    </a>
+
+    <div class="menu-title">
+      Account
+    </div>
+
+    <a href="profile.html" class="nav-item">
+      <span class="nav-icon">👤</span>
+      Profile
+    </a>
+
+    <div class="nav-item logout" onclick="logout()">
+      <span class="nav-icon">↪</span>
+      Logout
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="mobile-logo">
+        ADEZ <span>TECH</span>
+      </div>
+
+      <div class="page-title">
+        Boost Services
+      </div>
+
+      <div class="user-mini">
+
+        <span id="username">
+          Loading...
+        </span>
+
+        <div class="avatar" id="avatar">
+          A
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="heading">
+
+        <h1>
+          🚀 Boost Services
+        </h1>
+
+        <p>
+          Select an available service and create your order.
+        </p>
+
+      </div>
+
+
+      <!-- BALANCE -->
+
+      <div class="balance">
+
+        <div>
+
+          <div class="balance-label">
+            AVAILABLE BALANCE
+          </div>
+
+          <div
+            class="balance-value"
+            id="balance"
+          >
+            KSh 0.00
+          </div>
+
+        </div>
+
+        <a
+          href="wallet.html"
+          class="deposit-btn"
+        >
+          + Add Funds
+        </a>
+
+      </div>
+
+
+      <!-- ORDER CARD -->
+
+      <div class="card">
+
+        <h2>
+          Create New Order
+        </h2>
+
+        <div
+          id="message"
+          class="message"
+        ></div>
+
+
+        <form id="orderForm">
+
+          <!-- PLATFORM -->
+
+          <div class="form-group">
+
+            <label for="platform">
+              Platform
+            </label>
+
+            <select
+              id="platform"
+              required
+            >
+
+              <option value="">
+                Select platform
+              </option>
+
+              <option value="facebook">
+                Facebook
+              </option>
+
+              <option value="instagram">
+                Instagram
+              </option>
+
+              <option value="tiktok">
+                TikTok
+              </option>
+
+              <option value="youtube">
+                YouTube
+              </option>
+
+              <option value="x">
+                X / Twitter
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- SERVICE -->
+
+          <div class="form-group">
+
+            <label for="service">
+              Service
+            </label>
+
+            <select
+              id="service"
+              required
+              disabled
+            >
+
+              <option value="">
+                Select platform first
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- LINK -->
+
+          <div class="form-group">
+
+            <label for="link">
+              Target Link
+            </label>
+
+            <input
+              type="url"
+              id="link"
+              placeholder="https://..."
+              required
+            >
+
+            <div class="hint">
+              Enter the public URL for the content/account you are
+              authorized to manage.
+            </div>
+
+          </div>
+
+
+          <!-- QUANTITY -->
+
+          <div class="form-group">
+
+            <label for="quantity">
+              Quantity
+            </label>
+
+            <input
+              type="number"
+              id="quantity"
+              min="100"
+              step="100"
+              placeholder="Example: 1000"
+              required
+            >
+
+            <div class="hint" id="quantityHint">
+              Select a service to see the allowed quantity.
+            </div>
+
+          </div>
+
+
+          <!-- PRICE -->
+
+          <div class="price-box">
+
+            <div class="price-row">
+
+              <span>
+                Rate
+              </span>
+
+              <span id="rate">
+                KSh 0.00 / 1K
+              </span>
+
+            </div>
+
+            <div class="price-row">
+
+              <span>
+                Quantity
+              </span>
+
+              <span id="displayQuantity">
+                0
+              </span>
+
+            </div>
+
+            <div class="price-row">
+
+              <span>
+                Total
+              </span>
+
+              <span
+                class="price-total"
+                id="total"
+              >
+                KSh 0.00
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit"
+            id="submitButton"
+          >
+            PLACE ORDER
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <div class="info">
+
+        <h3>
+          ℹ️ Before placing an order
+        </h3>
+
+        <p>
+          Check the service description, minimum and maximum
+          quantity, and target URL carefully before submitting.
+          Orders will only be confirmed after the ADEZ TECH
+          server successfully accepts them. Do not submit
+          credentials, passwords, private account information,
+          or content you do not have permission to manage.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- MOBILE NAV -->
+
+  <nav class="bottom-nav">
+
+    <a href="dashboard.html">
+      <span class="icon">⌂</span>
+      Home
+    </a>
+
+    <a
+      href="boost.html"
+      class="active"
+    >
+      <span class="icon">🚀</span>
+      Boost
+    </a>
+
+    <a href="orders.html">
+      <span class="icon">📋</span>
+      Orders
+    </a>
+
+    <a href="wallet.html">
+      <span class="icon">💳</span>
+      Wallet
+    </a>
+
+    <a href="profile.html">
+      <span class="icon">👤</span>
+      Profile
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    /*
+      The service list below is only the frontend catalogue.
+      Prices should ultimately come from your trusted backend/API
+      so users cannot manipulate prices from their browser.
+    */
+
+    const services = {
+
+      facebook: [
+
+        {
+          id: "fb_followers",
+          name: "Facebook Page Followers",
+          rate: 50,
+          min: 100,
+          max: 10000
+        },
+
+        {
+          id: "fb_likes",
+          name: "Facebook Page Likes",
+          rate: 45,
+          min: 100,
+          max: 10000
+        }
+
+      ],
+
+      instagram: [
+
+        {
+          id: "ig_followers",
+          name: "Instagram Followers",
+          rate: 50,
+          min: 100,
+          max: 10000
+        },
+
+        {
+          id: "ig_likes",
+          name: "Instagram Likes",
+          rate: 35,
+          min: 100,
+          max: 10000
+        }
+
+      ],
+
+      tiktok: [
+
+        {
+          id: "tt_followers",
+          name: "TikTok Followers",
+          rate: 50,
+          min: 100,
+          max: 10000
+        },
+
+        {
+          id: "tt_likes",
+          name: "TikTok Likes",
+          rate: 35,
+          min: 100,
+          max: 10000
+        }
+
+      ],
+
+      youtube: [
+
+        {
+          id: "yt_subscribers",
+          name: "YouTube Subscribers",
+          rate: 150,
+          min: 100,
+          max: 5000
+        },
+
+        {
+          id: "yt_views",
+          name: "YouTube Views",
+          rate: 30,
+          min: 1000,
+          max: 100000
+        }
+
+      ],
+
+      x: [
+
+        {
+          id: "x_followers",
+          name: "X Followers",
+          rate: 60,
+          min: 100,
+          max: 10000
+        },
+
+        {
+          id: "x_likes",
+          name: "X Likes",
+          rate: 45,
+          min: 100,
+          max: 10000
+        }
+
+      ]
+
+    };
+
+
+    const platform =
+      document.getElementById("platform");
+
+    const service =
+      document.getElementById("service");
+
+    const quantity =
+      document.getElementById("quantity");
+
+    const rate =
+      document.getElementById("rate");
+
+    const total =
+      document.getElementById("total");
+
+    const displayQuantity =
+      document.getElementById("displayQuantity");
+
+    const quantityHint =
+      document.getElementById("quantityHint");
+
+    const form =
+      document.getElementById("orderForm");
+
+    const message =
+      document.getElementById("message");
+
+    const submitButton =
+      document.getElementById("submitButton");
+
+
+    let selectedService = null;
+
+
+    function getToken(){
+
+      return (
+        localStorage.getItem("adez_token") ||
+        sessionStorage.getItem("adez_token")
+      );
+
+    }
+
+
+    function logout(){
+
+      localStorage.removeItem("adez_token");
+      sessionStorage.removeItem("adez_token");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    function showMessage(text,type){
+
+      message.textContent = text;
+      message.className =
+        "message " + type;
+
+    }
+
+
+    function updatePrice(){
+
+      const qty =
+        Number(quantity.value) || 0;
+
+      displayQuantity.textContent =
+        qty.toLocaleString();
+
+      if(!selectedService){
+
+        total.textContent =
+          "KSh 0.00";
+
+        return;
+
+      }
+
+      const amount =
+        (qty / 1000) *
+        selectedService.rate;
+
+      total.textContent =
+        "KSh " +
+        amount.toFixed(2);
+
+    }
+
+
+    platform.addEventListener(
+      "change",
+      function(){
+
+        const list =
+          services[platform.value] || [];
+
+        service.innerHTML = "";
+
+        selectedService = null;
+
+        if(!list.length){
+
+          service.disabled = true;
+
+          service.innerHTML =
+            "<option value=''>Select platform first</option>";
+
+          return;
+
+        }
+
+        service.disabled = false;
+
+        service.innerHTML =
+          "<option value=''>Select service</option>";
+
+        list.forEach(item => {
+
+          const option =
+            document.createElement("option");
+
+          option.value = item.id;
+          option.textContent =
+            item.name +
+            " — KSh " +
+            item.rate +
+            "/1K";
+
+          service.appendChild(option);
+
+        });
+
+        quantity.value = "";
+
+        rate.textContent =
+          "KSh 0.00 / 1K";
+
+        quantityHint.textContent =
+          "Select a service to see the allowed quantity.";
+
+        updatePrice();
+
+      }
+    );
+
+
+    service.addEventListener(
+      "change",
+      function(){
+
+        const list =
+          services[platform.value] || [];
+
+        selectedService =
+          list.find(
+            item => item.id === service.value
+          );
+
+        if(!selectedService){
+
+          rate.textContent =
+            "KSh 0.00 / 1K";
+
+          quantityHint.textContent =
+            "Select a service to see the allowed quantity.";
+
+          updatePrice();
+
+          return;
+
+        }
+
+        rate.textContent =
+          "KSh " +
+          selectedService.rate +
+          " / 1K";
+
+        quantity.min =
+          selectedService.min;
+
+        quantity.max =
+          selectedService.max;
+
+        quantityHint.textContent =
+          "Minimum " +
+          selectedService.min.toLocaleString() +
+          " — Maximum " +
+          selectedService.max.toLocaleString();
+
+        quantity.value =
+          selectedService.min;
+
+        updatePrice();
+
+      }
+    );
+
+
+    quantity.addEventListener(
+      "input",
+      updatePrice
+    );
+
+
+    async function loadUser(){
+
+      const token =
+        getToken();
+
+      if(!token){
+
+        window.location.href =
+          "login.html";
+
+        return;
+
+      }
+
+      try{
+
+        const response =
+          await fetch(
+            "/api/me",
+            {
+              headers:{
+                "Authorization":
+                  "Bearer " + token
+              }
+            }
+          );
+
+        const data =
+          await response.json();
+
+        if(!response.ok || !data.success){
+
+          logout();
+          return;
+
+        }
+
+        document.getElementById("username")
+          .textContent =
+          "@" + data.user.username;
+
+        document.getElementById("avatar")
+          .textContent =
+          data.user.name
+            .trim()
+            .charAt(0)
+            .toUpperCase();
+
+        document.getElementById("balance")
+          .textContent =
+          "KSh " +
+          Number(data.user.balance)
+            .toFixed(2);
+
+      }catch(error){
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      async function(event){
+
+        event.preventDefault();
+
+        if(!s
