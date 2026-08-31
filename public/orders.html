@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Orders | ADEZ TECH</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#050505;
+      color:#fff;
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      width:240px;
+      height:100vh;
+      background:#090909;
+      border-right:1px solid #202020;
+      padding:25px 15px;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:900;
+      padding:0 12px 30px;
+    }
+
+    .logo span{
+      color:#00ff88;
+    }
+
+    .menu-title{
+      color:#555;
+      font-size:10px;
+      font-weight:bold;
+      margin:10px 12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    .nav-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:13px 12px;
+      border-radius:8px;
+      color:#888;
+      font-size:14px;
+      margin-bottom:5px;
+    }
+
+    .nav-item:hover,
+    .nav-item.active{
+      background:#102219;
+      color:#00ff88;
+    }
+
+    .nav-icon{
+      width:20px;
+      text-align:center;
+    }
+
+    .logout{
+      position:absolute;
+      bottom:25px;
+      left:15px;
+      right:15px;
+      cursor:pointer;
+    }
+
+    .main{
+      margin-left:240px;
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:72px;
+      background:#080808;
+      border-bottom:1px solid #202020;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 35px;
+    }
+
+    .page-title{
+      font-size:19px;
+      font-weight:800;
+    }
+
+    .user-mini{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#aaa;
+      font-size:13px;
+    }
+
+    .avatar{
+      width:35px;
+      height:35px;
+      background:#00ff88;
+      color:#000;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+    }
+
+    .content{
+      padding:35px;
+    }
+
+    .heading{
+      margin-bottom:25px;
+    }
+
+    .heading h1{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .heading p{
+      color:#777;
+      font-size:14px;
+    }
+
+    .table-card{
+      background:#0b0b0b;
+      border:1px solid #202020;
+      border-radius:14px;
+      overflow:hidden;
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:800px;
+    }
+
+    th{
+      background:#101010;
+      color:#777;
+      text-align:left;
+      font-size:11px;
+      text-transform:uppercase;
+      padding:15px;
+    }
+
+    td{
+      padding:16px 15px;
+      border-top:1px solid #1d1d1d;
+      font-size:13px;
+      color:#aaa;
+    }
+
+    td strong{
+      color:#fff;
+    }
+
+    .status{
+      display:inline-block;
+      padding:6px 9px;
+      border-radius:20px;
+      font-size:10px;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+
+    .pending{
+      background:#302711;
+      color:#ffc857;
+    }
+
+    .processing{
+      background:#102219;
+      color:#00ff88;
+    }
+
+    .completed{
+      background:#102219;
+      color:#00ff88;
+    }
+
+    .cancelled,
+    .failed{
+      background:#291010;
+      color:#ff7777;
+    }
+
+    .empty{
+      text-align:center;
+      padding:60px 20px;
+      color:#666;
+    }
+
+    .empty-icon{
+      font-size:35px;
+      margin-bottom:12px;
+    }
+
+    .empty a{
+      display:inline-block;
+      margin-top:18px;
+      padding:10px 16px;
+      background:#00ff88;
+      color:#000;
+      border-radius:7px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .mobile-logo{
+      display:none;
+    }
+
+    .bottom-nav{
+      display:none;
+    }
+
+    @media(max-width:800px){
+
+      .sidebar{
+        display:none;
+      }
+
+      .main{
+        margin-left:0;
+      }
+
+      .topbar{
+        height:65px;
+        padding:0 18px;
+      }
+
+      .mobile-logo{
+        display:block;
+        font-size:19px;
+        font-weight:900;
+      }
+
+      .mobile-logo span{
+        color:#00ff88;
+      }
+
+      .page-title{
+        display:none;
+      }
+
+      .content{
+        padding:23px 18px 90px;
+      }
+
+      .heading h1{
+        font-size:24px;
+      }
+
+      .bottom-nav{
+        display:flex;
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:65px;
+        background:#090909;
+        border-top:1px solid #202020;
+        z-index:1000;
+        justify-content:space-around;
+        align-items:center;
+      }
+
+      .bottom-nav a{
+        color:#666;
+        font-size:10px;
+        text-align:center;
+      }
+
+      .bottom-nav a.active{
+        color:#00ff88;
+      }
+
+      .bottom-nav .icon{
+        display:block;
+        font-size:18px;
+        margin-bottom:3px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      ADEZ <span>TECH</span>
+    </div>
+
+    <div class="menu-title">
+      Main Menu
+    </div>
+
+    <a href="dashboard.html" class="nav-item">
+      <span class="nav-icon">⌂</span>
+      Dashboard
+    </a>
+
+    <a href="boost.html" class="nav-item">
+      <span class="nav-icon">🚀</span>
+      Boost Services
+    </a>
+
+    <a href="orders.html" class="nav-item active">
+      <span class="nav-icon">📋</span>
+      My Orders
+    </a>
+
+    <a href="wallet.html" class="nav-item">
+      <span class="nav-icon">💳</span>
+      Wallet
+    </a>
+
+    <div class="menu-title">
+      Account
+    </div>
+
+    <a href="profile.html" class="nav-item">
+      <span class="nav-icon">👤</span>
+      Profile
+    </a>
+
+    <div class="nav-item logout" onclick="logout()">
+      <span class="nav-icon">↪</span>
+      Logout
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="mobile-logo">
+        ADEZ <span>TECH</span>
+      </div>
+
+      <div class="page-title">
+        My Orders
+      </div>
+
+      <div class="user-mini">
+
+        <span id="username">
+          Loading...
+        </span>
+
+        <div class="avatar" id="avatar">
+          A
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="heading">
+
+        <h1>
+          📋 My Orders
+        </h1>
+
+        <p>
+          View your ADEZ TECH order history and status.
+        </p>
+
+      </div>
+
+
+      <div class="table-card">
+
+        <div id="empty" class="empty">
+
+          <div class="empty-icon">
+            📦
+          </div>
+
+          <div>
+            Loading orders...
+          </div>
+
+        </div>
+
+
+        <div
+          class="table-wrap"
+          id="tableWrap"
+          style="display:none;"
+        >
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>ID</th>
+                <th>Service</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="ordersBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <nav class="bottom-nav">
+
+    <a href="dashboard.html">
+      <span class="icon">⌂</span>
+      Home
+    </a>
+
+    <a href="boost.html">
+      <span class="icon">🚀</span>
+      Boost
+    </a>
+
+    <a href="orders.html" class="active">
+      <span class="icon">📋</span>
+      Orders
+    </a>
+
+    <a href="wallet.html">
+      <span class="icon">💳</span>
+      Wallet
+    </a>
+
+    <a href="profile.html">
+      <span class="icon">👤</span>
+      Profile
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    function getToken(){
+
+      return (
+        localStorage.getItem("adez_token") ||
+        sessionStorage.getItem("adez_token")
+      );
+
+    }
+
+
+    function logout(){
+
+      localStorage.removeItem("adez_token");
+      sessionStorage.removeItem("adez_token");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    function escapeHTML(value){
+
+      return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+    }
+
+
+    function statusClass(status){
+
+      const value =
+        String(status).toLowerCase();
+
+      if(
+        value === "completed"
+      ) return "completed";
+
+      if(
+        value === "processing"
+      ) return "processing";
+
+      if(
+        value === "cancelled"
+      ) return "cancelled";
+
+      if(
+        value === "failed"
+      ) return "failed";
+
+      return "pending";
+
+    }
+
+
+    async function loadOrders(){
+
+      const token =
+        getToken();
+
+      if(!token){
+
+        logout();
+        return;
+
+      }
+
+      try{
+
+        const response =
+          await fetch(
+            "/api/orders",
+            {
+              headers:{
+                "Authorization":
+                  "Bearer " + token
+              }
+            }
+          );
+
+        const data =
+          await response.json();
+
+        if(
+          !response.ok ||
+          !data.success
+        ){
+
+          if(response.status === 401){
+            logout();
+            return;
+          }
+
+          throw new Error(
+            data.message ||
+            "Unable to load orders."
+          );
+
+        }
+
+
+        if(data.orders.length === 0){
+
+          document.getElementById("empty")
+            .innerHTML = `
+              <div class="empty-icon">📦</div>
+              <div>You haven't placed any orders yet.</div>
+              <a href="boost.html">
+                Create Your First Order
+              </a>
+            `;
+
+          return;
+
+        }
+
+
+        document.getElementById("empty")
+          .style.display = "none";
+
+        document.getElementById("tableWrap")
+          .style.display = "block";
+
+
+        const body =
+          document.getElementById("ordersBody");
+
+        body.innerHTML = "";
+
+
+        data.orders.forEach(order => {
+
+          const row =
+            document.createElement("tr");
+
+          const date =
+            new Date(
+              order.created_at + "Z"
+            );
+
+          const dateText =
+            isNaN(date.getTime())
+              ? order.created_at
+              : date.toLocaleString();
+
+          row.innerHTML = `
+
+            <td>
+              <strong>#${escapeHTML(order.id)}</strong>
+            </td>
+
+            <td>
+              ${escapeHTML(order.platform)}
+              <br>
+              <small style="color:#666;">
+                ${escapeHTML(order.service)}
+              </small>
+            </td>
+
+            <td>
+              ${Number(order.quantity).toLocaleString()}
+            </td>
+
+            <td>
+              KSh ${Number(order.amount).toFixed(2)}
+            </td>
+
+            <td>
+              <span class="status ${statusClass(order.status)}">
+                ${escapeHTML(order.status)}
+              </span>
+            </td>
+
+            <td>
+              ${escapeHTML(dateText)}
+            </td>
+
+          `;
+
+          body.appendChild(row);
+
+        });
+
+      }catch(error){
+
+        console.error(error);
+
+        document.getElementById("empty")
+          .innerHTML = `
+            <div class="empty-icon">⚠️</div>
+            <div>
+              ${escapeHTML(
+                error.message ||
+                "Unable to load orders."
+              )}
+            </div>
+          `;
+
+      }
+
+    }
+
+
+    async function loadUser(){
+
+      const token =
+        getToken();
+
+      if(!token){
+        logout();
+        return;
+      }
+
+      try{
+
+        const response =
+          await fetch(
+            "/api/me",
+            {
+              headers:{
+                "Authorization":
+                  "Bearer " + token
+              }
+            }
+          );
+
+        const data =
+          await response.json();
+
+        if(
+          !response.ok ||
+          !data.success
+        ){
+
+          logout();
+          return;
+
+        }
+
+        document.getElementById("username")
+          .textContent =
+          "@" + data.user.username;
+
+        document.getElementById("avatar")
+          .textContent =
+          data.user.name
+            .trim()
+            .charAt(0)
+            .toUpperCase();
+
+      }catch(error){
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    loadUser();
+    loadOrders();
+
+  </script>
+
+</body>
+  </html>
