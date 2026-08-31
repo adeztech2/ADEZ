@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sign Up | ADEZ TECH</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #050505;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 900;
+      margin-bottom: 25px;
+    }
+
+    .logo span {
+      color: #00ff88;
+    }
+
+    .card {
+      background: #0b0b0b;
+      border: 1px solid #202020;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+    }
+
+    .card h1 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      color: #bbb;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      background: #111;
+      color: #fff;
+      border: 1px solid #292929;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: #00ff88;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 55px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      color: #777;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .show-password:hover {
+      color: #00ff88;
+    }
+
+    .terms {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin: 8px 0 20px;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .terms input {
+      width: 15px;
+      height: 15px;
+      margin-top: 2px;
+      accent-color: #00ff88;
+    }
+
+    .submit {
+      width: 100%;
+      height: 50px;
+      background: #00ff88;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(0, 255, 136, .15);
+    }
+
+    .submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      display: none;
+      padding: 11px;
+      border-radius: 7px;
+      font-size: 13px;
+      margin-bottom: 17px;
+      text-align: center;
+    }
+
+    .message.error {
+      display: block;
+      background: #2a1010;
+      border: 1px solid #5b2020;
+      color: #ff7777;
+    }
+
+    .message.success {
+      display: block;
+      background: #0d261a;
+      border: 1px solid #1d5a3b;
+      color: #00ff88;
+    }
+
+    .login {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 22px;
+    }
+
+    .login a {
+      color: #00ff88;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 18px;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      color: #00ff88;
+    }
+
+    .requirements {
+      color: #666;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+
+      .card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">
+      ADEZ <span>TECH</span>
+    </div>
+
+    <div class="card">
+
+      <h1>Create Account</h1>
+
+      <p class="subtitle">
+        Join ADEZ TECH and access your SMM panel.
+      </p>
+
+      <div id="message" class="message"></div>
+
+      <form id="registerForm">
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Choose a username"
+            autocomplete="username"
+            minlength="3"
+            maxlength="30"
+            required
+          >
+
+          <div class="requirements">
+            Minimum 3 characters.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <div class="password-wrapper">
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              minlength="6"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              onclick="togglePassword('password', this)"
+            >
+              SHOW
+            </button>
+
+          </div>
+
+          <div class="requirements">
+            Minimum 6 characters.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+
+          <div class="password-wrapper">
+
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+              minlength="6"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              onclick="togglePassword('confirmPassword', this)"
+            >
+              SHOW
+            </button>
+
+          </div>
+        </div>
+
+        <label class="terms">
+
+          <input
+            type="checkbox"
+            id="terms"
+            required
+          >
+
+          <span>
+            I agree to use ADEZ TECH services responsibly and
+            accept the platform terms.
+          </span>
+
+        </label>
+
+        <button
+          type="submit"
+          class="submit"
+          id="submitButton"
+        >
+          CREATE ACCOUNT
+        </button>
+
+      </form>
+
+      <div class="login">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </div>
+
+    </div>
+
+    <a href="index.html" class="back">
+      ← Back to ADEZ TECH
+    </a>
+
+  </div>
+
+
+  <script>
+
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function togglePassword(id, button) {
+      const input = document.getElementById(id);
+
+      if (input.type === "password") {
+        input.type = "text";
+        button.textContent = "HIDE";
+      } else {
+        input.type = "password";
+        button.textContent = "SHOW";
+      }
+    }
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      const name =
+        document.getElementById("name").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const username =
+        document.getElementById("username").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+      const terms =
+        document.getElementById("terms").checked;
+
+
+      if (!name || !email || !username || !password) {
+        showMessage("Please complete all fields.", "error");
+        return;
+      }
+
+      if (username.length < 3) {
+        showMessage("Username must be at least 3 characters.", "error");
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage("Password must be at least 6 characters.", "error");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage("Passwords do not match.", "error");
+        return;
+      }
+
+      if (!terms) {
+        showMessage("Please accept the terms to continue.", "error");
+        return;
+      }
+
+
+      submitButton.disabled = true;
+      submitButton.textContent = "CREATING ACCOUNT...";
+
+      try {
+
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            username,
+            password
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(
+            data.message || "Registration failed."
+          );
+        }
+
+        showMessage(
+          "Account created successfully! Redirecting...",
+          "success"
+        );
+
+        form.reset();
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1200);
+
+      } catch (error) {
+
+        showMessage(
+          error.message || "Unable to create account.",
+          "error"
+        );
+
+        submitButton.disabled = false;
+        submitButton.textContent = "CREATE ACCOUNT";
+      }
+
+    });
+
+  </script>
+
+</body>
+        </html>
