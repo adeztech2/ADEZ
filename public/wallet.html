@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wallet | ADEZ TECH</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:240px;
+  height:100vh;
+  background:#090909;
+  border-right:1px solid #202020;
+  padding:25px 15px;
+  z-index:100;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:900;
+  padding:0 12px 30px;
+}
+
+.logo span{
+  color:#00ff88;
+}
+
+.menu-title{
+  color:#555;
+  font-size:10px;
+  font-weight:bold;
+  margin:10px 12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 12px;
+  border-radius:8px;
+  color:#888;
+  font-size:14px;
+  margin-bottom:5px;
+  transition:.2s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+  background:#102219;
+  color:#00ff88;
+}
+
+.nav-icon{
+  width:20px;
+  text-align:center;
+}
+
+.logout{
+  position:absolute;
+  bottom:25px;
+  left:15px;
+  right:15px;
+  cursor:pointer;
+}
+
+/* MAIN */
+
+.main{
+  margin-left:240px;
+  min-height:100vh;
+}
+
+.topbar{
+  height:72px;
+  background:#080808;
+  border-bottom:1px solid #202020;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 35px;
+}
+
+.page-title{
+  font-size:19px;
+  font-weight:800;
+}
+
+.user-mini{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#aaa;
+  font-size:13px;
+}
+
+.avatar{
+  width:35px;
+  height:35px;
+  background:#00ff88;
+  color:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+
+.content{
+  padding:35px;
+  max-width:1000px;
+}
+
+.heading{
+  margin-bottom:25px;
+}
+
+.heading h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.heading p{
+  color:#777;
+  font-size:14px;
+}
+
+/* BALANCE */
+
+.balance-card{
+  background:#0b0b0b;
+  border:1px solid #202020;
+  border-radius:14px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.balance-label{
+  color:#777;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.balance-value{
+  color:#00ff88;
+  font-size:32px;
+  font-weight:900;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+/* CARD */
+
+.card{
+  background:#0b0b0b;
+  border:1px solid #202020;
+  border-radius:14px;
+  padding:25px;
+}
+
+.card h2{
+  font-size:18px;
+  margin-bottom:20px;
+}
+
+.card p{
+  color:#777;
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+/* FORM */
+
+.form-group{
+  margin-bottom:18px;
+}
+
+label{
+  display:block;
+  color:#bbb;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+input{
+  width:100%;
+  height:48px;
+  background:#111;
+  color:#fff;
+  border:1px solid #292929;
+  border-radius:8px;
+  padding:0 13px;
+  outline:none;
+  font-size:14px;
+}
+
+input:focus{
+  border-color:#00ff88;
+}
+
+.quick{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.quick button{
+  height:38px;
+  background:#151515;
+  color:#aaa;
+  border:1px solid #292929;
+  border-radius:7px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.quick button:hover{
+  border-color:#00ff88;
+  color:#00ff88;
+}
+
+.submit{
+  width:100%;
+  height:49px;
+  background:#00ff88;
+  color:#000;
+  border:0;
+  border-radius:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.submit:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+/* INFO */
+
+.payment-info{
+  background:#08150e;
+  border:1px solid #17452d;
+  border-radius:10px;
+  padding:17px;
+  margin-bottom:20px;
+}
+
+.payment-info h3{
+  color:#00ff88;
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+.payment-info p{
+  margin:0;
+  color:#888;
+  font-size:12px;
+}
+
+.message{
+  display:none;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:18px;
+  font-size:13px;
+  text-align:center;
+}
+
+.message.error{
+  display:block;
+  background:#291010;
+  border:1px solid #552020;
+  color:#ff7777;
+}
+
+.message.success{
+  display:block;
+  background:#0d261a;
+  border:1px solid #1d5a3b;
+  color:#00ff88;
+}
+
+.note{
+  margin-top:20px;
+  color:#555;
+  font-size:11px;
+  line-height:1.6;
+}
+
+/* MOBILE */
+
+.mobile-logo{
+  display:none;
+}
+
+.bottom-nav{
+  display:none;
+}
+
+@media(max-width:800px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .topbar{
+    height:65px;
+    padding:0 18px;
+  }
+
+  .mobile-logo{
+    display:block;
+    font-size:19px;
+    font-weight:900;
+  }
+
+  .mobile-logo span{
+    color:#00ff88;
+  }
+
+  .page-title{
+    display:none;
+  }
+
+  .content{
+    padding:23px 18px 90px;
+  }
+
+  .heading h1{
+    font-size:24px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .bottom-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:65px;
+    background:#090909;
+    border-top:1px solid #202020;
+    z-index:1000;
+    justify-content:space-around;
+    align-items:center;
+  }
+
+  .bottom-nav a{
+    color:#666;
+    font-size:10px;
+    text-align:center;
+  }
+
+  .bottom-nav a.active{
+    color:#00ff88;
+  }
+
+  .bottom-nav .icon{
+    display:block;
+    font-size:18px;
+    margin-bottom:3px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+    ADEZ <span>TECH</span>
+  </div>
+
+  <div class="menu-title">
+    Main Menu
+  </div>
+
+  <a href="dashboard.html" class="nav-item">
+    <span class="nav-icon">⌂</span>
+    Dashboard
+  </a>
+
+  <a href="boost.html" class="nav-item">
+    <span class="nav-icon">🚀</span>
+    Boost Services
+  </a>
+
+  <a href="orders.html" class="nav-item">
+    <span class="nav-icon">📋</span>
+    My Orders
+  </a>
+
+  <a href="wallet.html" class="nav-item active">
+    <span class="nav-icon">💳</span>
+    Wallet
+  </a>
+
+  <div class="menu-title">
+    Account
+  </div>
+
+  <a href="profile.html" class="nav-item">
+    <span class="nav-icon">👤</span>
+    Profile
+  </a>
+
+  <div class="nav-item logout" onclick="logout()">
+    <span class="nav-icon">↪</span>
+    Logout
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div class="mobile-logo">
+    ADEZ <span>TECH</span>
+  </div>
+
+  <div class="page-title">
+    Wallet
+  </div>
+
+  <div class="user-mini">
+
+    <span id="username">
+      Loading...
+    </span>
+
+    <div class="avatar" id="avatar">
+      A
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="content">
+
+  <div class="heading">
+
+    <h1>
+      💳 Wallet
+    </h1>
+
+    <p>
+      Manage your ADEZ TECH account balance.
+    </p>
+
+  </div>
+
+
+  <!-- BALANCE -->
+
+  <div class="balance-card">
+
+    <div class="balance-label">
+      AVAILABLE BALANCE
+    </div>
+
+    <div
+      class="balance-value"
+      id="balance"
+    >
+      KSh 0.00
+    </div>
+
+  </div>
+
+
+  <div class="grid">
+
+    <!-- DEPOSIT -->
+
+    <div class="card">
+
+      <h2>
+        Add Funds
+      </h2>
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+      <div class="payment-info">
+
+        <h3>
+          M-Pesa Deposit
+        </h3>
+
+        <p>
+          Enter the amount you want to deposit and your
+          M-Pesa phone number. Payment confirmation will
+          be handled by the secure payment backend.
+        </p>
+
+      </div>
+
+
+      <form id="depositForm">
+
+        <div class="form-group">
+
+          <label for="amount">
+            Amount (KSh)
+          </label>
+
+          <input
+            type="number"
+            id="amount"
+            min="10"
+            step="1"
+            placeholder="Example: 100"
+            required
+          >
+
+        </div>
+
+
+        <div class="quick">
+
+          <button type="button" onclick="setAmount(50)">
+            KSh 50
+          </button>
+
+          <button type="button" onclick="setAmount(100)">
+            KSh 100
+          </button>
+
+          <button type="button" onclick="setAmount(500)">
+            KSh 500
+          </button>
+
+          <button type="button" onclick="setAmount(1000)">
+            KSh 1,000
+          </button>
+
+          <button type="button" onclick="setAmount(2500)">
+            KSh 2,500
+          </button>
+
+          <button type="button" onclick="setAmount(5000)">
+            KSh 5,000
+          </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="phone">
+            M-Pesa Phone Number
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            placeholder="07XXXXXXXX"
+            required
+          >
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="submit"
+          id="depositButton"
+        >
+          CONTINUE TO PAYMENT
+        </button>
+
+      </form>
+
+
+      <div class="note">
+        Never enter your M-Pesa PIN, password, or OTP on
+        the ADEZ TECH website. Those credentials should
+        only be entered into the official M-Pesa payment
+        interface when prompted.
+      </div>
+
+    </div>
+
+
+    <!-- HOW IT WORKS -->
+
+    <div class="card">
+
+      <h2>
+        How Deposits Work
+      </h2>
+
+      <p>
+        1. Enter the amount you want to add.
+      </p>
+
+      <p>
+        2. Enter the M-Pesa number that should receive
+        the payment request.
+      </p>
+
+      <p>
+        3. Continue to the secure payment process.
+      </p>
+
+      <p>
+        4. After the payment provider confirms payment,
+        your ADEZ TECH wallet will be credited.
+      </p>
+
+      <p>
+        5. Use your wallet balance to pay for available
+        services.
+      </p>
+
+      <div class="payment-info">
+
+        <h3>
+          🔒 Payment Security
+        </h3>
+
+        <p>
+          Your wallet should only be credited after the
+          payment provider sends a verified confirmation
+          to the ADEZ TECH server.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- MOBILE NAV -->
+
+<nav class="bottom-nav">
+
+  <a href="dashboard.html">
+    <span class="icon">⌂</span>
+    Home
+  </a>
+
+  <a href="boost.html">
+    <span class="icon">🚀</span>
+    Boost
+  </a>
+
+  <a href="orders.html">
+    <span class="icon">📋</span>
+    Orders
+  </a>
+
+  <a href="wallet.html" class="active">
+    <span class="icon">💳</span>
+    Wallet
+  </a>
+
+  <a href="profile.html">
+    <span class="icon">👤</span>
+    Profile
+  </a>
+
+</nav>
+
+
+<script>
+
+function getToken(){
+
+  return (
+    localStorage.getItem("adez_token") ||
+    sessionStorage.getItem("adez_token")
+  );
+
+}
+
+
+function logout(){
+
+  localStorage.removeItem("adez_token");
+  sessionStorage.removeItem("adez_token");
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+function showMessage(text,type){
+
+  const box =
+    document.getElementById("message");
+
+  box.textContent = text;
+
+  box.className =
+    "message " + type;
+
+}
+
+
+function setAmount(value){
+
+  document.getElementById("amount")
+    .value = value;
+
+}
+
+
+async function loadUser(){
+
+  const token =
+    getToken();
+
+  if(!token){
+
+    logout();
+    return;
+
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/me",
+        {
+          headers:{
+            "Authorization":
+              "Bearer " + token
+          }
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      logout();
+      return;
+
+    }
+
+    document.getElementById("username")
+      .textContent =
+      "@" + data.user.username;
+
+    document.getElementById("avatar")
+      .textContent =
+      data.user.name
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+    document.getElementById("balance")
+      .textContent =
+      "KSh " +
+      Number(data.user.balance)
+        .toFixed(2);
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+document.getElementById("depositForm")
+  .addEventListener(
+    "submit",
+    async function(event){
+
+      event.preventDefault();
+
+      const token =
+        getToken();
+
+      if(!token){
+
+        logout();
+        return;
+
+      }
+
+      const amount =
+        Number(
+          document.getElementById("amount").value
+        );
+
+      const phone =
+        document.getElementById("phone")
+          .value.trim();
+
+      if(!Number.isFinite(amount) || amount < 10){
+
+        showMessage(
+          "Minimum deposit is KSh 10.",
+          "error"
+        );
+
+        return;
+
+      }
+
+      if(!/^(?:254|\+254|0)7\d{8}$/.test(phone)){
+
+        showMessage(
+          "Enter a valid Kenyan M-Pesa phone number.",
+          "error"
+        );
+
+        return;
+
+      }
+
+      const button =
+        document.getElementById("depositButton");
+
+      button.disabled = true;
+      button.textContent =
+        "STARTING PAYMENT...";
+
+
+      try{
+
+        /*
+          The secure payment endpoint will be connected
+          to the real payment provider in the backend.
+        */
+
+        const response =
+          await fetch(
+            "/api/deposits",
+            {
+              method:"POST",
+
+              headers:{
+                "Content-Type":
+                  "application/json",
+
+                "Authorization":
+                  "Bearer " + token
+              },
+
+              body:JSON.stringify({
+                amount,
+                phone
+              })
+
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if(
+          !response.ok ||
+          !data.success
+        ){
+
+          throw new Error(
+            data.message ||
+            "Payment could not be started."
+          );
+
+        }
+
+
+        showMessage(
+          data.message ||
+          "Payment request started. Complete it using the official payment prompt.",
+          "success"
+        );
+
+
+        if(data.checkoutUrl){
+
+          window.location.href =
+            data.checkoutUrl;
+
+        }
+
+
+        await loadUser();
+
+
+      }catch(error){
+
+        showMessage(
+          error.message ||
+          "Unable to start payment.",
+          "error"
+        );
+
+      }
+
+
+      button.disabled = false;
+
+      button.textContent =
+        "CONTINUE TO PAYMENT";
+
+    }
+  );
+
+
+loadUser();
+
+</script>
+
+</body>
+  </html>
