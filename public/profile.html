@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Profile | ADEZ TECH</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:240px;
+  height:100vh;
+  background:#090909;
+  border-right:1px solid #202020;
+  padding:25px 15px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:900;
+  padding:0 12px 30px;
+}
+
+.logo span{
+  color:#00ff88;
+}
+
+.menu-title{
+  color:#555;
+  font-size:10px;
+  font-weight:bold;
+  margin:10px 12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 12px;
+  border-radius:8px;
+  color:#888;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.nav-item:hover,
+.nav-item.active{
+  background:#102219;
+  color:#00ff88;
+}
+
+.nav-icon{
+  width:20px;
+  text-align:center;
+}
+
+.logout{
+  position:absolute;
+  bottom:25px;
+  left:15px;
+  right:15px;
+  cursor:pointer;
+}
+
+.main{
+  margin-left:240px;
+  min-height:100vh;
+}
+
+.topbar{
+  height:72px;
+  background:#080808;
+  border-bottom:1px solid #202020;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 35px;
+}
+
+.page-title{
+  font-size:19px;
+  font-weight:800;
+}
+
+.user-mini{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#aaa;
+  font-size:13px;
+}
+
+.avatar{
+  width:35px;
+  height:35px;
+  background:#00ff88;
+  color:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+
+.content{
+  padding:35px;
+  max-width:900px;
+}
+
+.heading{
+  margin-bottom:25px;
+}
+
+.heading h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.heading p{
+  color:#777;
+  font-size:14px;
+}
+
+.profile-card{
+  background:#0b0b0b;
+  border:1px solid #202020;
+  border-radius:14px;
+  padding:28px;
+}
+
+.profile-header{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding-bottom:25px;
+  margin-bottom:25px;
+  border-bottom:1px solid #202020;
+}
+
+.big-avatar{
+  width:75px;
+  height:75px;
+  background:#00ff88;
+  color:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  font-weight:900;
+}
+
+.profile-header h2{
+  font-size:21px;
+  margin-bottom:5px;
+}
+
+.profile-header p{
+  color:#777;
+  font-size:13px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.info-box{
+  background:#101010;
+  border:1px solid #202020;
+  border-radius:9px;
+  padding:17px;
+}
+
+.info-label{
+  color:#666;
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+
+.info-value{
+  color:#fff;
+  font-size:14px;
+  word-break:break-word;
+}
+
+.balance{
+  color:#00ff88;
+  font-weight:900;
+}
+
+.status{
+  color:#00ff88;
+  font-weight:800;
+}
+
+.actions{
+  margin-top:25px;
+  display:flex;
+  gap:10px;
+}
+
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:12px 18px;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.btn-green{
+  background:#00ff88;
+  color:#000;
+}
+
+.btn-dark{
+  background:#151515;
+  color:#fff;
+  border:1px solid #292929;
+}
+
+.btn-dark:hover{
+  border-color:#00ff88;
+  color:#00ff88;
+}
+
+.message{
+  display:none;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:18px;
+  font-size:13px;
+}
+
+.message.error{
+  display:block;
+  background:#291010;
+  border:1px solid #552020;
+  color:#ff7777;
+}
+
+.message.success{
+  display:block;
+  background:#0d261a;
+  border:1px solid #1d5a3b;
+  color:#00ff88;
+}
+
+.mobile-logo{
+  display:none;
+}
+
+.bottom-nav{
+  display:none;
+}
+
+@media(max-width:800px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .topbar{
+    height:65px;
+    padding:0 18px;
+  }
+
+  .mobile-logo{
+    display:block;
+    font-size:19px;
+    font-weight:900;
+  }
+
+  .mobile-logo span{
+    color:#00ff88;
+  }
+
+  .page-title{
+    display:none;
+  }
+
+  .content{
+    padding:23px 18px 90px;
+  }
+
+  .heading h1{
+    font-size:24px;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .profile-card{
+    padding:20px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .bottom-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:65px;
+    background:#090909;
+    border-top:1px solid #202020;
+    z-index:1000;
+    justify-content:space-around;
+    align-items:center;
+  }
+
+  .bottom-nav a{
+    color:#666;
+    font-size:10px;
+    text-align:center;
+  }
+
+  .bottom-nav a.active{
+    color:#00ff88;
+  }
+
+  .bottom-nav .icon{
+    display:block;
+    font-size:18px;
+    margin-bottom:3px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+    ADEZ <span>TECH</span>
+  </div>
+
+  <div class="menu-title">
+    Main Menu
+  </div>
+
+  <a href="dashboard.html" class="nav-item">
+    <span class="nav-icon">⌂</span>
+    Dashboard
+  </a>
+
+  <a href="boost.html" class="nav-item">
+    <span class="nav-icon">🚀</span>
+    Boost Services
+  </a>
+
+  <a href="orders.html" class="nav-item">
+    <span class="nav-icon">📋</span>
+    My Orders
+  </a>
+
+  <a href="wallet.html" class="nav-item">
+    <span class="nav-icon">💳</span>
+    Wallet
+  </a>
+
+  <div class="menu-title">
+    Account
+  </div>
+
+  <a href="profile.html" class="nav-item active">
+    <span class="nav-icon">👤</span>
+    Profile
+  </a>
+
+  <div class="nav-item logout" onclick="logout()">
+    <span class="nav-icon">↪</span>
+    Logout
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div class="mobile-logo">
+    ADEZ <span>TECH</span>
+  </div>
+
+  <div class="page-title">
+    Profile
+  </div>
+
+  <div class="user-mini">
+
+    <span id="topUsername">
+      Loading...
+    </span>
+
+    <div class="avatar" id="topAvatar">
+      A
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="content">
+
+  <div class="heading">
+
+    <h1>
+      👤 My Profile
+    </h1>
+
+    <p>
+      View your ADEZ TECH account information.
+    </p>
+
+  </div>
+
+
+  <div class="profile-card">
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+
+    <div class="profile-header">
+
+      <div
+        class="big-avatar"
+        id="bigAvatar"
+      >
+        A
+      </div>
+
+      <div>
+
+        <h2 id="fullName">
+          Loading...
+        </h2>
+
+        <p id="email">
+          Loading...
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-grid">
+
+      <div class="info-box">
+
+        <div class="info-label">
+          Full Name
+        </div>
+
+        <div
+          class="info-value"
+          id="nameValue"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <div class="info-label">
+          Username
+        </div>
+
+        <div
+          class="info-value"
+          id="usernameValue"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <div class="info-label">
+          Email
+        </div>
+
+        <div
+          class="info-value"
+          id="emailValue"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <div class="info-label">
+          Wallet Balance
+        </div>
+
+        <div
+          class="info-value balance"
+          id="balanceValue"
+        >
+          KSh 0.00
+        </div>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <div class="info-label">
+          Account Status
+        </div>
+
+        <div class="info-value status">
+          Active
+        </div>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <div class="info-label">
+          Member Since
+        </div>
+
+        <div
+          class="info-value"
+          id="createdValue"
+        >
+          —
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <a
+        href="wallet.html"
+        class="btn btn-green"
+      >
+        ADD FUNDS
+      </a>
+
+      <button
+        class="btn btn-dark"
+        onclick="logout()"
+      >
+        LOG OUT
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- MOBILE NAV -->
+
+<nav class="bottom-nav">
+
+  <a href="dashboard.html">
+    <span class="icon">⌂</span>
+    Home
+  </a>
+
+  <a href="boost.html">
+    <span class="icon">🚀</span>
+    Boost
+  </a>
+
+  <a href="orders.html">
+    <span class="icon">📋</span>
+    Orders
+  </a>
+
+  <a href="wallet.html">
+    <span class="icon">💳</span>
+    Wallet
+  </a>
+
+  <a href="profile.html" class="active">
+    <span class="icon">👤</span>
+    Profile
+  </a>
+
+</nav>
+
+
+<script>
+
+function getToken(){
+
+  return (
+    localStorage.getItem("adez_token") ||
+    sessionStorage.getItem("adez_token")
+  );
+
+}
+
+
+function logout(){
+
+  localStorage.removeItem("adez_token");
+  sessionStorage.removeItem("adez_token");
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+async function loadProfile(){
+
+  const token =
+    getToken();
+
+  if(!token){
+
+    logout();
+    return;
+
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/me",
+        {
+          headers:{
+            "Authorization":
+              "Bearer " + token
+          }
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      logout();
+      return;
+
+    }
+
+
+    const user =
+      data.user;
+
+
+    const name =
+      user.name || "User";
+
+
+    const initial =
+      name
+        .trim()
+        .charAt(0)
+        .toUpperCase() || "A";
+
+
+    document.getElementById("fullName")
+      .textContent = name;
+
+
+    document.getElementById("email")
+      .textContent =
+      user.email || "";
+
+
+    document.getElementById("nameValue")
+      .textContent = name;
+
+
+    document.getElementById("usernameValue")
+      .textContent =
+      "@" + user.username;
+
+
+    document.getElementById("emailValue")
+      .textContent =
+      user.email;
+
+
+    document.getElementById("balanceValue")
+      .textContent =
+      "KSh " +
+      Number(user.balance)
+        .toFixed(2);
+
+
+    document.getElementById("topUsername")
+      .textContent =
+      "@" + user.username;
+
+
+    document.getElementById("topAvatar")
+      .textContent =
+      initial;
+
+
+    document.getElementById("bigAvatar")
+      .textContent =
+      initial;
+
+
+    if(user.created_at){
+
+      const date =
+        new Date(
+          user.created_at + "Z"
+        );
+
+      if(!isNaN(date.getTime())){
+
+        document.getElementById(
+          "createdValue"
+        ).textContent =
+          date.toLocaleDateString(
+            undefined,
+            {
+              year:"numeric",
+              month:"long",
+              day:"numeric"
+            }
+          );
+
+      }else{
+
+        document.getElementById(
+          "createdValue"
+        ).textContent =
+          user.created_at;
+
+      }
+
+    }
+
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById("message")
+      .textContent =
+      "Unable to load profile.";
+
+    document.getElementById("message")
+      .className =
+      "message error";
+
+  }
+
+}
+
+
+loadProfile();
+
+</script>
+
+</body>
+          </html>
